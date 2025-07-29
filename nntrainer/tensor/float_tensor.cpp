@@ -177,7 +177,11 @@ void FloatTensor::setZero() {
     //  sscal(size(), 0, getData<float>(), 1);
     /// @note we cannot use sscal, when we set zero. if the data is inf or
     /// NaN, then the inf or NaN still remain.
-    memset((float *)getData(), 0, sizeof(float) * size());
+    float* data = static_cast<float*>(getData());
+    /// @note memset implementation expects to pointer to be not null, else UB
+    if (data) {
+      memset(data, 0, sizeof(float) * size());
+    }
   } else {
     /// @todo implement apply_i
     // apply_i<float>([](float val) -> float { return 0; });

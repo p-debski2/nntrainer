@@ -20,6 +20,7 @@ limitations under the License.
 
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 
@@ -90,12 +91,14 @@ std::vector<uint8_t> read_bmp(const std::string &input_bmp_name, int *width, int
   const uint8_t *img_bytes = new uint8_t[len];
   file.seekg(0, std::ios::beg);
   file.read((char *)img_bytes, static_cast<std::streamsize>(len));
-  const int32_t header_size =
-    *(reinterpret_cast<const int32_t *>(img_bytes + 10));
-  *width = *(reinterpret_cast<const int32_t *>(img_bytes + 18));
-  *height = *(reinterpret_cast<const int32_t *>(img_bytes + 22));
-  const int32_t bpp = *(reinterpret_cast<const int32_t *>(img_bytes + 28));
-  *channels = bpp / 8;
+  
+  int32_t header_size, bpp;
+
+  /// @note dereferencing a misaligned ptr is considered undefined behavior, memcpy is safe
+  memcpy(&header_size, img_bytes + 10, sizeof(const int32_t));
+  memcpy(width, img_bytes + 18, sizeof(const int32_t));
+  memcpy(height, img_bytes + 22, sizeof(const int32_t));
+  memcpy(&bpp, img_bytes + 28, sizeof(const int32_t));
 
   // there may be padding bytes when the width is not a multiple of 4 bytes
   // 8 * channels == bits per pixel

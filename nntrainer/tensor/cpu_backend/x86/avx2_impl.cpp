@@ -396,8 +396,10 @@ void custom_scopy(const unsigned int N, const float *X, const int incX,
                          : "ymm0", "memory");
 #endif
   }
-  for (unsigned int i = N8; i < N; ++i) {
-    Y[i] = X[i];
+
+  if (N > N8) {
+    size_t remaining_size = static_cast<size_t>(N - N8) * sizeof(decltype(*Y));
+    memcpy(&Y[N8], &X[N8], remaining_size);
   }
 }
 

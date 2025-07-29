@@ -117,9 +117,9 @@ public:
     std::enable_if_t<std::is_base_of<GraphNode, T>::value, T> * = nullptr>
   inline graph_const_iterator<T> cbegin() const {
     if (Sorted.empty())
-      return graph_const_iterator<T>(&(*node_list.cbegin()));
+      return graph_const_iterator<T>(node_list.data());
     else
-      return graph_const_iterator<T>(&(*Sorted.cbegin()));
+      return graph_const_iterator<T>(Sorted.data());
   }
 
   /**
@@ -134,9 +134,9 @@ public:
     std::enable_if_t<std::is_base_of<GraphNode, T>::value, T> * = nullptr>
   inline graph_const_iterator<T> cend() const {
     if (Sorted.empty())
-      return graph_const_iterator<T>(&(*node_list.cbegin())) + node_list.size();
+      return graph_const_iterator<T>(node_list.data()) + node_list.size();
     else
-      return graph_const_iterator<T>(&(*Sorted.cbegin())) + Sorted.size();
+      return graph_const_iterator<T>(Sorted.data()) + Sorted.size();
   }
 
   /**
