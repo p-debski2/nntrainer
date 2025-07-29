@@ -112,7 +112,12 @@ bool Int4QTensor::operator==(const Int4QTensor &rhs) const {
   const float *_scales = (float *)getScale();
   const float *_rscales = (float *)rhs.getScale();
   for (size_t i = 0; i < scale_size(); ++i) {
-    if (std::fabs(_scales[i] - _rscales[i]) > 1e-5)
+    float scale, rhs_scale;
+
+    memcpy(&scale, _scales + i, sizeof(float));
+    memcpy(&rhs_scale, _rscales + i, sizeof(float));
+    
+    if (std::fabs(scale - rhs_scale) > 1e-5)
       return false;
   }
 
@@ -203,7 +208,7 @@ const void *Int4QTensor::getAddress(unsigned int i) const {
 
 const int8_t Int4QTensor::getValue(unsigned int i) const {
   int8_t value = ((int8_t *)getData())[i / 2];
-  return (i % 2 == 0) ? value >> 4 : ((int8_t)(value << 4) >> 4);
+  return (i % 2 == 0) ? value >> 4 : ((int8_t)((value & 0x0f) << 4) >> 4);
 }
 
 int8_t Int4QTensor::getValue(unsigned int i) {
@@ -228,7 +233,7 @@ void Int4QTensor::setValue(float value) {
 
   int8_t val = value;
   int8_t *data = (int8_t *)getData();
-  std::fill(data, data + (size() + 1) / 2, (val << 4) | (val & 0x0f));
+  std::fill(data, data + (size() + 1) / 2, ((val & 0x0f) << 4) | (val & 0x0f));
 }
 
 /// @todo this func should be template function
@@ -244,7 +249,7 @@ void Int4QTensor::addValue(unsigned int b, unsigned int c, unsigned int h,
 
   // encode result value to int8 data
   ((int8_t *)getData())[idx / 2] =
-    (idx % 2 == 0) ? (val << 4) | (((int8_t *)getData())[idx / 2] & 0x0f)
+    (idx % 2 == 0) ? ((val & 0x0f) << 4) | (((int8_t *)getData())[idx / 2] & 0x0f)
                    : (((int8_t *)getData())[idx / 2] & 0xf0) | (val & 0x0f);
 }
 
@@ -258,7 +263,7 @@ void Int4QTensor::setValue(unsigned int b, unsigned int c, unsigned int h,
   int8_t val = value;
 
   ((int8_t *)getData())[idx / 2] =
-    (idx % 2 == 0) ? (val << 4) | (((int8_t *)getData())[idx / 2] & 0x0f)
+    (idx % 2 == 0) ? ((val & 0x0f) << 4) | (((int8_t *)getData())[idx / 2] & 0x0f)
                    : (((int8_t *)getData())[idx / 2] & 0xf0) | (val & 0x0f);
 }
 

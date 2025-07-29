@@ -230,7 +230,9 @@ TEST(nntrainer_Tensor, Tensor_04_p) {
   float *scale_data = tensor.getScale<float>();
 
   for (unsigned int idx = 0; idx < scales.size(); ++idx) {
-    ASSERT_FLOAT_EQ(scale_data[idx], scales[idx]);
+    float scale;
+    memcpy(&scale, scale_data + idx, sizeof(float));
+    ASSERT_FLOAT_EQ(scale, scales[idx]);
   }
 
   EXPECT_EQ(status, ML_ERROR_NONE);
@@ -402,7 +404,7 @@ TEST(nntrainer_Tensor, QTensor_03_p) {
           // get encoded int8 data and decode to a single int 4 value
           int8_t value = tensor.getValue<int8_t>(idx / 2);
           if (idx % 2 == 1) {
-            value <<= 4;
+            value = (value & 0x0f) << 4;
           }
           value >>= 4;
           ASSERT_EQ(in[c][h][w], value);
