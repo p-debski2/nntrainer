@@ -16,7 +16,7 @@
 
 template <typename T>
 UIntTensor<T>::UIntTensor(std::string name_, Tformat fm, QScheme qscheme_) :
-  TensorBase(name_, fm, checkTensorDataType()), qscheme(qscheme_) {}
+  TensorBase(name_, fm, UIntTensor<T>::checkTensorDataType()), qscheme(qscheme_) {}
 
 template <typename T>
 UIntTensor<T>::UIntTensor(const TensorDim &d, bool alloc_now, Initializer init,
@@ -59,7 +59,7 @@ UIntTensor<T>::UIntTensor(
     dim.setTensorDim(1, d[0][0][0].size());
   }
 
-  dim.setTensorType({fm, checkTensorDataType()});
+  dim.setTensorType({fm, UIntTensor<T>::checkTensorDataType()});
 
   if (scale_size() != scales.size() || scale_size() != zero_points.size()) {
     throw std::invalid_argument("[Tensor] Scales vector or zero point vector "

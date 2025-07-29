@@ -325,7 +325,7 @@ private:
    * @brief  check Tensor Data Type (to briefly support template)
    * @return Tdatatype
    */
-  Tdatatype checkTensorDataType() const {
+  static Tdatatype checkTensorDataType() {
     if (typeid(T) == typeid(uint8_t))
       return Tdatatype::UINT8;
     else if (typeid(T) == typeid(uint16_t))
