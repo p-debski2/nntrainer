@@ -128,7 +128,7 @@ std::unique_ptr<ml::train::LearningRateScheduler>
 createLearningRateScheduler(const LearningRateSchedulerType &type,
                             const std::vector<std::string> &properties) {
   auto &eg = nntrainer::Engine::Global();
-  return eg.createLearningRateSchedulerObject(type, properties);
+  return eg.createLearningRateSchedulerObject(static_cast<int>(type), properties);
 }
 
 /**

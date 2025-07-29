@@ -29,7 +29,7 @@ std::unique_ptr<OptimizerWrapped>
 createOptimizerWrapped(const ml::train::OptimizerType &type,
                        const std::vector<std::string> &properties) {
   auto &eg = nntrainer::Engine::Global();
-  return createOptimizerWrapped(eg.createOptimizerObject(type), properties);
+  return createOptimizerWrapped(eg.createOptimizerObject(static_cast<int>(type)), properties);
 }
 
 /**

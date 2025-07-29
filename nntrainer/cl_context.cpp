@@ -34,41 +34,41 @@ static void add_default_object(ClContext &cc) {
   if (FullyConnectedLayerCl::registerClKernels()) {
     cc.registerFactory(nntrainer::createLayer<FullyConnectedLayerCl>,
                        FullyConnectedLayerCl::type,
-                       ml::train::LayerType::LAYER_FC);
+                       static_cast<int>(ml::train::LayerType::LAYER_FC));
   }
 
   if (AdditionLayerCL::registerClKernels()) {
     cc.registerFactory(nntrainer::createLayer<AdditionLayerCL>,
                        AdditionLayerCL::type,
-                       ml::train::LayerType::LAYER_ADDITION);
+                       static_cast<int>(ml::train::LayerType::LAYER_ADDITION));
   }
 
   if (SwiGLULayerCl::registerClKernels()) {
     cc.registerFactory(nntrainer::createLayer<SwiGLULayerCl>,
-                       SwiGLULayerCl::type, ml::train::LayerType::LAYER_SWIGLU);
+                       SwiGLULayerCl::type, static_cast<int>(ml::train::LayerType::LAYER_SWIGLU));
   }
 
   if (ReshapeLayerCl::registerClKernels()) {
     cc.registerFactory(nntrainer::createLayer<ReshapeLayerCl>,
                        ReshapeLayerCl::type,
-                       ml::train::LayerType::LAYER_RESHAPE);
+                       static_cast<int>(ml::train::LayerType::LAYER_RESHAPE));
   }
 
   if (RMSNormLayerCl::registerClKernels()) {
     cc.registerFactory(nntrainer::createLayer<RMSNormLayerCl>,
                        RMSNormLayerCl::type,
-                       ml::train::LayerType::LAYER_RMSNORM);
+                       static_cast<int>(ml::train::LayerType::LAYER_RMSNORM));
   }
 
   if (ConcatLayerCl::registerClKernels()) {
     cc.registerFactory(nntrainer::createLayer<ConcatLayerCl>,
-                       ConcatLayerCl::type, ml::train::LayerType::LAYER_CONCAT);
+                       ConcatLayerCl::type, static_cast<int>(ml::train::LayerType::LAYER_CONCAT));
   }
 
   if (TransposeLayerCl::registerClKernels()) {
     cc.registerFactory(nntrainer::createLayer<TransposeLayerCl>,
                        TransposeLayerCl::type,
-                       ml::train::LayerType::LAYER_TRANSPOSE);
+                       static_cast<int>(ml::train::LayerType::LAYER_TRANSPOSE));
   }
 }
 

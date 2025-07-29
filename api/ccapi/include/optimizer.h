@@ -32,7 +32,7 @@ class LearningRateScheduler;
 /**
  * @brief     Enumeration of optimizer type
  */
-enum OptimizerType {
+enum class OptimizerType : int {
   ADAM = ML_TRAIN_OPTIMIZER_TYPE_ADAM,      /** adam */
   ADAMW = ML_TRAIN_OPTIMIZER_TYPE_ADAMW,    /** AdamW */
   SGD = ML_TRAIN_OPTIMIZER_TYPE_SGD,        /** sgd */
@@ -149,12 +149,13 @@ AdamW(const std::vector<std::string> &properties = {}) {
 /**
  * @brief     Enumeration of learning rate scheduler type
  */
-enum LearningRateSchedulerType {
+enum class LearningRateSchedulerType : int {
   CONSTANT = ML_TRAIN_LR_SCHEDULER_TYPE_CONSTANT, /**< constant */
   EXPONENTIAL =
     ML_TRAIN_LR_SCHEDULER_TYPE_EXPONENTIAL,  /**< exponentially decay */
   STEP = ML_TRAIN_LR_SCHEDULER_TYPE_STEP,    /**< step wise decay */
-  COSINE = ML_TRAIN_LR_SCHEDULER_TYPE_COSINE /**< cosine annealing */
+  COSINE = ML_TRAIN_LR_SCHEDULER_TYPE_COSINE, /**< cosine annealing */
+  UNKNOWN = ML_TRAIN_LR_SCHEDULER_TYPE_UNKNOWN /**< unknown */
 };
 
 /**

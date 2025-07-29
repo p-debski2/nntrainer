@@ -34,7 +34,7 @@ namespace train {
 /**
  * @brief     Enumeration of layer type
  */
-enum LayerType {
+enum class LayerType : int {
   LAYER_IN = ML_TRAIN_LAYER_TYPE_INPUT,          /**< Input Layer type */
   LAYER_WEIGHT = ML_TRAIN_LAYER_TYPE_WEIGHT,     /**< Weight Layer type */
   LAYER_TENSOR = ML_TRAIN_LAYER_TYPE_TENSOR,     /**< Weight Layer type */

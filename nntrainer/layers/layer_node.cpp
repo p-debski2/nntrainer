@@ -165,7 +165,7 @@ std::unique_ptr<LayerNode>
 createLayerNode(const ml::train::LayerType &type,
                 const std::vector<std::string> &properties) {
   auto &eg = nntrainer::Engine::Global();
-  return createLayerNode(eg.createLayerObject(type, properties), properties);
+  return createLayerNode(eg.createLayerObject(static_cast<int>(type), properties), properties);
 }
 
 /**
